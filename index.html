@@ -228,7 +228,7 @@
                     </div>
                     <div class="row">
                         <script type="text/javascript">var submitted=false;</script>
-                        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none" onload="if(submitted){$('#fthx').html('<b><i>   Thank you, '+$('#fname').val()+' !</i></b>' ).removeClass('hid');$('#ftel').val('');$('#ftext').val('');$('#femail').val('');$('#fname').val('');}"></iframe>
+                        <iframe name="hidden_iframe" id="hidden_iframe" style="display:none" onload="if(submitted){$('#fthx').html('<p>&nbsp;&nbsp;&nbsp;&nbsp;<i>Thank you, '+$('#fname').val()+' !</i></p>' ).removeClass('hid');$('#ftel').val('');$('#ftext').val('');$('#femail').val('');$('#fname').val('');}"></iframe>
                         <form action="https://docs.google.com/forms/d/e/1FAIpQLScTGwUFFJ1QeljzWRIytdHF_SxFdpcYJrQ0HvlcxUYOGsqi1w/formResponse" method="POST" id="mG61Hd" target="hidden_iframe" onsubmit="submitted=true;" class="contact-form">
                             <fieldset class="col-md-4 col-sm-6">
                                 <input id="fname" required type="text" name="entry.2005620554" placeholder="Your Name...">
@@ -242,9 +242,13 @@
                             <fieldset class="col-md-12 col-sm-12">
                                 <textarea id="ftext" required type="text" width="30" name="entry.839337160" cols="30" rows="6" placeholder="Leave your message..."></textarea>
                             </fieldset>
+                            <fieldset class="hid">
+                                <textarea id="pushToken" class="js-subscription-json hid" type="text" name="entry.1984977102"></textarea>
+                            </fieldset>
                             <fieldset class="col-md-12 col-sm-12">
                                 <input type="submit" class="button big default" value="Send Message" onclick="submitted=true">
                             </fieldset>
+                            <span id="fthx" class="hid"></span>
                         </form>
                     </div> <!-- .contact-form -->
                     </div>
@@ -264,6 +268,15 @@
         <script src="js/vendor/jquery-1.10.2.min.js"></script>
         <script src="js/min/plugins.min.js"></script>
         <script src="js/min/main.min.js"></script>
-
+        <script type='text/javascript'>
+             $(document).ready(function() {
+                $("form").submit(function(e){
+                    if ( $('#pushToken').val().length > 0 ) {
+                        console.log('submit intercepted: honeypot='+$('#pushToken').val());
+                        e.preventDefault(e);        
+                    }
+                });
+            });
+        </script>
     </body>
 </html>
